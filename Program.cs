@@ -31,10 +31,13 @@ namespace Lab9_Circles
 
         public Circle(int t, Graphics gr, int maxX, int maxY)
         {
-            time = t * 100;
+            t *= 100; //десятые секунды
+            //рандомизация времени жизни: t - среднее время
+            //время жизни принадлежит промежутку [t - t/2; t + t/2]
+            time = t + rand.Next(t) - t/2; 
             this.gr = gr;
-            x = rand.Next(20, maxX - 20);
-            y = rand.Next(20, maxY - 20);
+            x = rand.Next(maxX);
+            y = rand.Next(maxY);
             outCircle = new Pen(Color.FromArgb(255, rand.Next(255), rand.Next(255), rand.Next(255)), 2);
             inCircle = new Pen(Color.Black, 2);
         }
@@ -42,15 +45,17 @@ namespace Lab9_Circles
 
         public void Run()
         {
-            Thread.Sleep(rand.Next(20) * 100);
-            for (int i = 0; i < time; i++)
+            //рандомизация времени зарождения окружности после 
+            Thread.Sleep(rand.Next(time/2) * 10);
+
+            for (int i = 50; i < time; i++)
             {
-                gr.DrawEllipse(inCircle, x - r / 2, y - r / 2, r, r);
+                gr.DrawEllipse(inCircle, x - r/2, y - r/2, r, r);
                 r += 1;
-                gr.DrawEllipse(outCircle, x - r / 2, y - r / 2, r, r);
+                gr.DrawEllipse(outCircle, x - r/2, y - r/2, r, r);
                 Thread.Sleep(10);
-            }
-            gr.DrawEllipse(inCircle, x - r / 2, y - r / 2, r, r);
+            }            
+            gr.DrawEllipse(inCircle, x - r/2, y - r/2, r, r);
             Paint.counter--;
         }
 
