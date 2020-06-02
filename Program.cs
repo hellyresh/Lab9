@@ -58,7 +58,7 @@ namespace Lab9_Circles
                 Thread.Sleep(slInt);
             }            
             gr.DrawEllipse(inCircle, x - r/2, y - r/2, r, r);
-            Paint.counter--;
+            Interlocked.Decrement(ref Paint.counter);
         }
 
     }
